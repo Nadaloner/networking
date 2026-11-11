@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reti di Calcolatori — Appunti</title>
+<meta name="description" content="Appunti di Reti di Calcolatori: note, formulario e flashcard.">
+<script>
+  try {
+    var t = localStorage.getItem('rdc:theme');
+    t = t ? JSON.parse(t) : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.dataset.theme = t;
+  } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕸️</text></svg>">
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="topbar">
+  <button class="icon-btn only-mobile" id="menuBtn" aria-label="Apri menu">☰</button>
+  <a class="brand" href="#/"><span class="brand-mark">RdC</span><span class="brand-name" id="brandName">Reti di Calcolatori</span></a>
+  <button class="search-trigger" id="searchBtn"><span>Cerca nelle note…</span><kbd>/</kbd></button>
+  <nav class="top-actions">
+    <a class="pill" href="#/quiz" title="Flashcard (q)">⚡ Flashcard</a>
+    <button class="icon-btn" id="focusBtn" title="Modalità focus (f)" aria-label="Modalità focus">◎</button>
+    <button class="icon-btn" id="themeBtn" title="Tema (t)" aria-label="Cambia tema">◐</button>
+    <button class="icon-btn" id="helpBtn" title="Scorciatoie (?)" aria-label="Scorciatoie">?</button>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-progress" id="sideProgress"></div>
+    <nav id="nav"></nav>
+  </aside>
+  <main id="main" tabindex="-1"><div class="loading">Caricamento appunti…</div></main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<div class="modal" id="search" hidden>
+  <div class="palette" role="dialog" aria-label="Cerca">
+    <input id="searchInput" type="search" placeholder="Cerca formule, concetti, sigle…" autocomplete="off" spellcheck="false">
+    <ul id="results"></ul>
+    <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> naviga</span><span><kbd>↵</kbd> apri</span><span><kbd>esc</kbd> chiudi</span></div>
+  </div>
+</div>
+
+<div class="modal" id="help" hidden>
+  <div class="palette help" role="dialog" aria-label="Scorciatoie">
+    <h3>Scorciatoie da tastiera</h3>
+    <dl>
+      <dt><kbd>/</kbd> <kbd>⌘K</kbd></dt><dd>Cerca</dd>
+      <dt><kbd>[</kbd> <kbd>]</kbd></dt><dd>Nota precedente / successiva</dd>
+      <dt><kbd>s</kbd></dt><dd>Segna la nota come studiata</dd>
+      <dt><kbd>q</kbd></dt><dd>Flashcard</dd>
+      <dt><kbd>h</kbd></dt><dd>Home</dd>
+      <dt><kbd>f</kbd></dt><dd>Modalità focus</dd>
+      <dt><kbd>t</kbd></dt><dd>Tema chiaro / scuro</dd>
+      <dt><kbd>spazio</kbd> <kbd>1</kbd> <kbd>2</kbd></dt><dd>Flashcard: gira · ripassa · lo so</dd>
+    </dl>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
