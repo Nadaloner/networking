@@ -126,6 +126,30 @@ tags: [RetiDiCalcolatori/quiz]
 > [!question]- Cosa sono i livelli L, M, Q, H di un QR code?
 > I livelli di error recovery di Reed-Solomon: da circa 7% (L) a circa 30% (H) del codice recuperabile.
 
+> [!question]- Quando conviene correggere (FEC) invece di rilevare e ritrasmettere (ARQ)?
+> Quando ritrasmettere è costoso o impossibile: sonde spaziali (ritardi enormi), CD (nessuno da cui farsi rimandare il dato), TV broadcast (nessun canale di ritorno), wireless molto rumoroso. Su canali affidabili (fibra) conviene rilevare e ritrasmettere.
+
+> [!question]- Che distanza minima di Hamming serve per correggere e errori? E per rilevarli?
+> Per correggere e errori serve d ≥ 2e+1; per rilevarli d ≥ e+1.
+
+> [!question]- Codifica i dati 1011 con Hamming (7,4) (parità nelle posizioni 1, 2, 4).
+> 0110011. Se il bit 6 arriva invertito, falliscono i controlli di peso 2 e 4 → sindrome 6 → si inverte il bit 6.
+
+> [!question]- Perché Reed-Solomon gestisce bene i burst e Hamming no?
+> RS lavora su simboli (es. byte): un byte con tutti gli 8 bit sbagliati conta come un solo errore. Hamming corregge un solo bit per codeword.
+
+> [!question]- Con e errori ed s cancellazioni, quando RS(n,k) riesce a correggere tutto?
+> Quando 2e + s ≤ n − k: ogni cancellazione "costa" metà di un errore perché la sua posizione è già nota.
+
+> [!question]- Calcola il CRC del messaggio 1101011111 con generatore 10011.
+> Si aggiungono 4 zeri (grado 4) e si divide in aritmetica mod 2: resto 0010. Si trasmette 11010111110010.
+
+> [!question]- Quali errori rileva sicuramente un CRC con generatore di grado r ben scelto?
+> Tutti gli errori su un bit, tutti quelli con numero dispari di bit (se G contiene il fattore x+1) e tutti i burst lunghi al massimo r bit.
+
+> [!question]- Il CRC protegge da modifiche intenzionali dei dati?
+> No: un attaccante può modificare i dati e ricalcolare il CRC. Servono hash crittografici o MAC.
+
 ## Livello data-link — [[Livello data-link (controllo di flusso, Stop and Wait)]]
 
 > [!question]- A cosa serve il controllo di flusso?
@@ -145,6 +169,24 @@ tags: [RetiDiCalcolatori/quiz]
 
 > [!question]- Perché un prodotto banda × RTT grande mette in crisi Stop and Wait?
 > Perché nel canale potrebbero stare molti bit contemporaneamente, ma si manda un solo frame e poi si aspetta un RTT intero: quasi tutta la capacità viene sprecata.
+
+> [!question]- Quali sono i tre compiti principali del livello data-link?
+> Framing (delimitare i frame), controllo degli errori e controllo di flusso.
+
+> [!question]- Perché, quando arriva un frame duplicato, il destinatario deve comunque rimandare l'ACK?
+> Perché il duplicato significa che l'ACK precedente si è perso: senza un nuovo ACK il mittente continuerebbe ad andare in timeout e a ritrasmettere.
+
+> [!question]- Cosa succede se il timeout è troppo corto? E troppo lungo?
+> Troppo corto: scade prima che l'ACK torni, quindi ritrasmissioni inutili e duplicati. Troppo lungo: dopo una perdita il mittente resta fermo a lungo e il throughput cala.
+
+> [!question]- Calcola l'efficienza dello Stop and Wait: 50 kbit/s, RTT 500 ms, frame da 1000 bit.
+> Il frame richiede 20 ms; poi si attendono 500 ms. U = 20 / 520 ≈ 4%.
+
+> [!question]- Come si risolve il problema dei timeout nel piggybacking con traffico sbilanciato?
+> Il ricevente aspetta un tempo breve: se ha dati da mandare ci attacca l'ACK, altrimenti invia un ACK separato prima che scada il timeout del mittente.
+
+> [!question]- Qual è la soluzione ai limiti dello Stop and Wait su canali con banda × ritardo grande?
+> I protocolli a finestra scorrevole (sliding window, es. Go-Back-N e Selective Repeat), che permettono di avere più frame in viaggio prima di ricevere gli ACK.
 
 ## Collegamenti
 - [[Reti di Calcolatori|torna all'indice]]
