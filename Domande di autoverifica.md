@@ -94,6 +94,58 @@ tags: [RetiDiCalcolatori/quiz]
 > [!question]- Cos'è il problema "near-far" in CDMA e come si risolve?
 > Un telefono vicino all'antenna trasmette con un segnale molto più forte di uno lontano, "coprendo" quest'ultimo. Si risolve con il controllo di potenza: la stazione base regola continuamente la potenza di trasmissione di ogni telefono (fino a 800 volte/secondo in IS-95).
 
+## Correzione errori — [[Codici di correzione errori (Reed-Solomon, CRC, LDPC)]]
+
+> [!question]- Qual è la differenza principale tra Hamming e Reed-Solomon?
+> Hamming lavora sui singoli bit, Reed-Solomon su simboli (byte o gruppi di byte) ed è basato sull'aritmetica polinomiale: per questo è molto efficace contro gli errori di burst.
+
+> [!question]- Quanti simboli errati può correggere un codice RS(n,k)?
+> Fino a (n−k)/2 simboli.
+
+> [!question]- Cosa significa RS(204,188) nella TV digitale?
+> Ogni 204 byte del flusso, 188 sono dati effettivi e 16 sono di ridondanza per la correzione degli errori.
+
+> [!question]- Perché un'erasure è "meglio" di un errore di trasmissione?
+> Perché nella cancellazione si conosce già la posizione del dato mancante, quindi il codice deve solo ricostruirlo e non anche trovarlo.
+
+> [!question]- Cosa ha dimostrato Shannon riguardo alla correzione degli errori?
+> Che aumentando la forza di correzione il data rate non tende a 0 ma a un valore finito (la capacità del canale): esistono codici che trasmettono in modo affidabile fino a quel limite.
+
+> [!question]- Qual è il prezzo dei codici LDPC?
+> Il decoding è molto lento: migliorare la correzione mantenendo il data rate costa in tempo di calcolo e memoria.
+
+> [!question]- Come si rappresenta 1011 come polinomio CRC?
+> x³ + x + 1 (il termine x² manca perché quel bit è 0).
+
+> [!question]- Come fa il ricevente a capire con il CRC che c'è stato un errore?
+> Divide il frame ricevuto (messaggio shiftato meno il resto) per il polinomio generatore: se il resto è diverso da 0 c'è stato un errore di trasmissione.
+
+> [!question]- Il CRC corregge gli errori?
+> No, li rileva soltanto. CRC-32 è usato in zip, PNG ed Ethernet.
+
+> [!question]- Cosa sono i livelli L, M, Q, H di un QR code?
+> I livelli di error recovery di Reed-Solomon: da circa 7% (L) a circa 30% (H) del codice recuperabile.
+
+## Livello data-link — [[Livello data-link (controllo di flusso, Stop and Wait)]]
+
+> [!question]- A cosa serve il controllo di flusso?
+> A evitare che il mittente mandi più dati di quanti il destinatario riesca a gestire, congestionando il canale: il destinatario può chiedere uno stop e poi far riprendere.
+
+> [!question]- Come funziona lo Stop and Wait e qual è il suo limite?
+> Si invia un frame e si aspetta l'ACK prima di inviare il successivo. Basta un canale half-duplex, ma la comunicazione è lentissima: enorme overhead.
+
+> [!question]- Perché serve un timeout nello Stop and Wait?
+> Perché l'ACK viene mandato solo se il frame è corretto: se il frame è sbagliato o perso non arriva nulla, e il mittente deve capire dopo un certo tempo che va reinviato.
+
+> [!question]- Perché si numerano i frame con 0/1?
+> Se si perde l'ACK il mittente reinvia lo stesso frame: con la numerazione alternata il destinatario riconosce il duplicato (es. 1 seguito da 1) e lo scarta.
+
+> [!question]- Cos'è il piggybacking e quando funziona male?
+> L'ACK viene inviato insieme ai dati che si devono comunque trasmettere. Funziona male se la comunicazione non è equilibrata: l'ACK attende dati che non arrivano e scattano i timeout.
+
+> [!question]- Perché un prodotto banda × RTT grande mette in crisi Stop and Wait?
+> Perché nel canale potrebbero stare molti bit contemporaneamente, ma si manda un solo frame e poi si aspetta un RTT intero: quasi tutta la capacità viene sprecata.
+
 ## Collegamenti
 - [[Reti di Calcolatori|torna all'indice]]
 - [[Glossario e formulario]]
